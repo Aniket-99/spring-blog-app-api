@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.api.blog.entities.User;
+import com.api.blog.exceptions.ResourceNotFoundException;
 import com.api.blog.payloads.UserDto;
 import com.api.blog.repositories.UserRepo;
 import com.api.blog.services.UserService;
@@ -23,8 +24,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDto updateUser(UserDto user, Integer id) {
-		return null;
+	public UserDto updateUser(UserDto userDto, Integer id) {
+
+		User user = this.userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "Id", id));
+		user.setName(userDto.getName());
+		user.setEmail(userDto.getEmail());
+		user.setAbout(userDto.getAbout());
+		user.setPassword(userDto.getPassword());
+
+		User updatedUser = this.userRepo.save(user);
+
+		return this.userToDto(updatedUser);
+
 	}
 
 	@Override
