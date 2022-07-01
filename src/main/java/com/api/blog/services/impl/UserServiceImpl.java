@@ -1,8 +1,10 @@
 package com.api.blog.services.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.api.blog.entities.User;
 import com.api.blog.exceptions.ResourceNotFoundException;
@@ -10,6 +12,7 @@ import com.api.blog.payloads.UserDto;
 import com.api.blog.repositories.UserRepo;
 import com.api.blog.services.UserService;
 
+@Service
 public class UserServiceImpl implements UserService {
 
 	@Autowired
@@ -40,17 +43,22 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto getUserById(Integer id) {
-		return null;
+		User user = this.userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "Id", id));
+		return this.userToDto(user);
 	}
 
 	@Override
 	public List<UserDto> getAllUsers() {
-		return null;
+		List<User> allUsers = this.userRepo.findAll();
+
+		return allUsers.stream().map(user -> this.userToDto(user)).collect(Collectors.toList());
+
 	}
 
 	@Override
 	public void deleteUser(Integer id) {
-
+		User user = this.userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "Id", id));
+		this.userRepo.delete(user);
 	}
 
 	private User dtoToUser(UserDto userDto) {
