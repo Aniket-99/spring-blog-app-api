@@ -1,19 +1,32 @@
 package com.api.blog.payloads;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 //@NoArgsConstructor
 //@Getter
 //@Setter
 public class UserDto {
 
 	private int id;
+
+	@NotEmpty
+	@Size(min = 4, message = "Username must be greater than 4 Characters")
 	private String name;
+
+	@Email(message = "Email address is invalid")
 	private String email;
+
+	@NotEmpty
+	@Size(min = 3, max = 10,message = "Password must be minimum of 3 characters and maximum of 4 characters")
 	private String password;
+
+	@NotEmpty
 	private String about;
 
 	public UserDto() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public UserDto(int id, String name, String email, String password, String about) {
