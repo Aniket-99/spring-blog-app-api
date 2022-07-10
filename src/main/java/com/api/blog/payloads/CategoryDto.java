@@ -1,9 +1,19 @@
 package com.api.blog.payloads;
 
-public class CategoryDto {
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
+public class CategoryDto {
+	
+	
 	private int categoryId;
+	
+	@NotEmpty
+	@Size(min = 4,message = "Category title shoudl be greater than 4 characters")
 	private String categoryTitle;
+	
+	@NotEmpty
+	@Size(min = 10, message = "Description should be greater than 10 characters")
 	private String categoryDescription;
 
 	public CategoryDto() {
