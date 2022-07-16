@@ -4,6 +4,8 @@ import java.util.Date;
 
 public class PostDto {
 
+	private int postId;
+
 	private String title;
 
 	private String content;
@@ -20,14 +22,24 @@ public class PostDto {
 		super();
 	}
 
-	public PostDto(String title, String content, String imageName, Date addedDate, UserDto user, CategoryDto category) {
+	public PostDto(int postId, String title, String content, String imageName, Date addedDate, UserDto user,
+			CategoryDto category) {
 		super();
+		this.postId = postId;
 		this.title = title;
 		this.content = content;
 		this.imageName = imageName;
 		this.addedDate = addedDate;
 		this.user = user;
 		this.category = category;
+	}
+
+	public int getPostId() {
+		return postId;
+	}
+
+	public void setPostId(int postId) {
+		this.postId = postId;
 	}
 
 	public String getTitle() {
@@ -80,8 +92,8 @@ public class PostDto {
 
 	@Override
 	public String toString() {
-		return "PostDto [title=" + title + ", content=" + content + ", imageName=" + imageName + ", addedDate="
-				+ addedDate + ", user=" + user + ", category=" + category + "]";
+		return "PostDto [postId=" + postId + ", title=" + title + ", content=" + content + ", imageName=" + imageName
+				+ ", addedDate=" + addedDate + ", user=" + user + ", category=" + category + "]";
 	}
 
 }
