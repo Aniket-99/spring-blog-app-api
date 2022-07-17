@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.blog.payloads.ApiResponse;
@@ -73,6 +74,18 @@ public class PostController {
 	@GetMapping("/category/{categoryId}/posts")
 	public ResponseEntity<List<PostDto>> getPostsByCategory(@PathVariable("categoryId") int categoryId) {
 		List<PostDto> posts = this.postServiceImpl.getPostByCategory(categoryId);
+		return new ResponseEntity<List<PostDto>>(posts, HttpStatus.OK);
+	}
+
+	@GetMapping("/posts/search")
+	public ResponseEntity<?> searchPostByTitle(@RequestParam(name = "title") String keyword) {
+		List<PostDto> posts = this.postServiceImpl.searchPost(keyword);
+
+		if (posts.isEmpty()) {
+			return new ResponseEntity<ApiResponse>(new ApiResponse("No Post found with title " + keyword, false),
+					HttpStatus.NOT_FOUND);
+		}
+
 		return new ResponseEntity<List<PostDto>>(posts, HttpStatus.OK);
 	}
 
