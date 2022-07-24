@@ -108,6 +108,7 @@ public class PostServiceImpl implements PostService {
 				.orElseThrow(() -> new ResourceNotFoundException("Post ", "Post Id", postId));
 
 		PostDto postDto = this.modelMapper.map(post, PostDto.class);
+
 		return postDto;
 	}
 

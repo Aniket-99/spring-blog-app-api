@@ -1,7 +1,10 @@
 package com.api.blog.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Post {
@@ -36,12 +40,15 @@ public class Post {
 	@ManyToOne
 	private User user;
 
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+	private List<Comment> comments = new ArrayList<>();
+
 	public Post() {
 		super();
 	}
 
 	public Post(int postId, String title, String content, String imageName, Date addedDate, Category category,
-			User user) {
+			User user, List<Comment> comments) {
 		super();
 		this.postId = postId;
 		this.title = title;
@@ -50,6 +57,7 @@ public class Post {
 		this.addedDate = addedDate;
 		this.category = category;
 		this.user = user;
+		this.comments = comments;
 	}
 
 	public int getPostId() {
@@ -108,10 +116,19 @@ public class Post {
 		this.user = user;
 	}
 
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
 	@Override
 	public String toString() {
 		return "Post [postId=" + postId + ", title=" + title + ", content=" + content + ", imageName=" + imageName
-				+ ", addedDate=" + addedDate + ", category=" + category + ", user=" + user + "]";
+				+ ", addedDate=" + addedDate + ", category=" + category + ", user=" + user + ", comments=" + comments
+				+ "]";
 	}
 
 }

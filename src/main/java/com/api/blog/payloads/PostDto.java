@@ -1,6 +1,8 @@
 package com.api.blog.payloads;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class PostDto {
 
@@ -18,12 +20,14 @@ public class PostDto {
 
 	private CategoryDto category;
 
+	private List<CommentDto> comment = new ArrayList<>();
+
 	public PostDto() {
 		super();
 	}
 
 	public PostDto(int postId, String title, String content, String imageName, Date addedDate, UserDto user,
-			CategoryDto category) {
+			CategoryDto category, List<CommentDto> comment) {
 		super();
 		this.postId = postId;
 		this.title = title;
@@ -32,6 +36,7 @@ public class PostDto {
 		this.addedDate = addedDate;
 		this.user = user;
 		this.category = category;
+		this.comment = comment;
 	}
 
 	public int getPostId() {
@@ -90,10 +95,19 @@ public class PostDto {
 		this.category = category;
 	}
 
+	public List<CommentDto> getComment() {
+		return comment;
+	}
+
+	public void setComment(List<CommentDto> comment) {
+		this.comment = comment;
+	}
+
 	@Override
 	public String toString() {
 		return "PostDto [postId=" + postId + ", title=" + title + ", content=" + content + ", imageName=" + imageName
-				+ ", addedDate=" + addedDate + ", user=" + user + ", category=" + category + "]";
+				+ ", addedDate=" + addedDate + ", user=" + user + ", category=" + category + ", comment=" + comment
+				+ "]";
 	}
 
 }
