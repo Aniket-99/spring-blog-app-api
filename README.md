@@ -5,4 +5,5 @@
 ## Technologies used
 - *Spring / Spring Boot*
 - *Spring Data JPA*
+- *Spring Security*
 - *MySql*
