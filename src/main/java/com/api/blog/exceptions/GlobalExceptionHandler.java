@@ -22,19 +22,26 @@ public class GlobalExceptionHandler {
 
 		return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.NOT_FOUND);
 	}
-	
-	
+
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Map<String, String>> methodArgsNotValidException(MethodArgumentNotValidException ex){
-		Map<String,String> response = new HashMap<>();
-		
-		ex.getBindingResult().getAllErrors().forEach((error)->{
-			String fieldName = ((FieldError)error).getField();
+	public ResponseEntity<Map<String, String>> methodArgsNotValidException(MethodArgumentNotValidException ex) {
+		Map<String, String> response = new HashMap<>();
+
+		ex.getBindingResult().getAllErrors().forEach((error) -> {
+			String fieldName = ((FieldError) error).getField();
 			String message = error.getDefaultMessage();
 			response.put(fieldName, message);
 		});
-		
-		return new ResponseEntity<Map<String,String>>(response,HttpStatus.BAD_REQUEST);
+
+		return new ResponseEntity<Map<String, String>>(response, HttpStatus.BAD_REQUEST);
 	}
-	
+
+	@ExceptionHandler(ApiException.class)
+	public ResponseEntity<ApiResponse> handleApiExcetion(ApiException ex) {
+		String message = ex.getMessage();
+		ApiResponse apiResponse = new ApiResponse(message, true);
+
+		return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.BAD_REQUEST);
+	}
+
 }
